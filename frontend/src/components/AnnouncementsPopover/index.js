@@ -239,7 +239,7 @@ export default function AnnouncementsPopover() {
         handleClose={() => setShowAnnouncementDialog(false)}
       />
       <IconButton
-        color="secondary"
+        style={{ color: "white" }}
         variant="contained"
         aria-describedby={id}
         onClick={handleClick}
@@ -313,7 +313,7 @@ export default function AnnouncementsPopover() {
                 </ListItem>
               ))}
             {isArray(announcements) && announcements.length === 0 && (
-              <ListItemText primary=" Nenhum registro" />
+              <ListItemText primary="Nenhum registro" />
             )}
           </List>
         </Paper>
