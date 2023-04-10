@@ -24,7 +24,7 @@ import {
 import MarkdownWrapper from "../MarkdownWrapper";
 import ModalImageCors from "../ModalImageCors";
 import MessageOptionsMenu from "../MessageOptionsMenu";
-import whatsBackground from "../../assets/wa-background.png";
+//import whatsBackground from "../../assets/wa-background.png";
 import LocationPreview from "../LocationPreview";
 
 import api from "../../services/api";
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   messagesList: {
-    backgroundImage: `url(${whatsBackground})`,
+    backgroundImage: theme.backgroundImage,
     display: "flex",
     flexDirection: "column",
     flexGrow: 1,
