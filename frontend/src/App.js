@@ -35,18 +35,10 @@ const App = () => {
 
   const lightTheme = createTheme(
     {
-      scrollbarStyles: {
-        "&::-webkit-scrollbar": {
-          width: "8px",
-          height: "8px",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.3)",
-          backgroundColor: "#e8e8e8",
-        },
-      },
       palette: {
-        primary: { main: "#6B62FE" },
+        primary: { main: '#3c6afb' },
+        secondary: { main: "#757575" },
+        error: { main: '#ff0000' }, // cor dos icones
       },
       backgroundImage: `url(${lightBackground})`,
     },
@@ -59,31 +51,24 @@ const App = () => {
         MuiCssBaseline: {
           '@global': {
             body: {
-              backgroundColor: "#080d14",
+              backgroundColor: "#1d2230",
             }
           }
         }
       },
-      scrollbarStyles: {
-        "&::-webkit-scrollbar": {
-          width: "8px",
-          height: "8px",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.3)",
-          backgroundColor: "#ffffff",
-        },
-      },
+      
       palette: {
-        primary: { main: "#d500f9" },
-        secondary: { main: "#ff9100" },
+        primary: { main: "#7d9bfa" },
+        divider: "#464a5c",
+        secondary: { main: "#eee" },
+        error: { main: '#ff0000' }, // cor dos icones
         background: {
-          default: "#080d14",
-          paper: "#181d22",
+          default: "#1d2230",
+          paper: "#2c3145",
         },
         text: {
-          primary: "#d500f9",
-          secondary: "#ffffff",
+          primary: "#eee",
+          secondary: "#fff",
         },
       },
       backgroundImage: `url(${darkBackground})`,
@@ -119,20 +104,15 @@ const App = () => {
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <Routes />
       <CssBaseline />
+      {/* desativado aqui */}
       <FormGroup row className={classes.switch}>
         <FormControlLabel control={
-          <Switch
-            className={classes.visible}
-            checked={checked}
-            onChange={handleChange}
-            inputProps={{ 'aria-label': 'controlled' }}
-          />
-        } label={theme === "light" ?
-          <Brightness4Icon color="primary" /> :
-          <Brightness7Icon color="primary" />
-        }
-        />
-      </FormGroup>
+	<Switch
+	checked={checked}
+	onChange={handleChange}
+	inputProps={{ 'aria-label': 'controlled'}} 
+	/>}label="Dark Mode" />
+</FormGroup>
     </ThemeProvider>
   );
 };
