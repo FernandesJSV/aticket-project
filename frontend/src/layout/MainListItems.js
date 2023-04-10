@@ -49,18 +49,17 @@ import { isArray } from "lodash";
 import api from "../services/api";
 import toastError from "../errors/toastError";
 
-/*
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
 	icon: {
 		color: theme.palette.secondary.main
 	},
-})); */
+}));
 
 function ListItemLink(props) {
   const { icon, primary, to, className } = props;
- // const classes = useStyles(); 
+  const classes = useStyles(); 
 
   const renderLink = React.useMemo(
     () =>
@@ -73,7 +72,7 @@ function ListItemLink(props) {
   return (
     <li>
       <ListItem button component={renderLink} className={className}>
-        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+      {icon ? <ListItemIcon className={classes.icon}>{icon}</ListItemIcon> : null}
         {/* icon ? <ListItemIcon className={classes.icon}>{icon}</ListItemIcon> : null */}
         <ListItemText primary={primary} />
       </ListItem>
