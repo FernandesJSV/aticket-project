@@ -44,10 +44,11 @@ const useStyles = makeStyles((theme) => ({
 
   tabsHeader: {
     flex: "none",
-    backgroundColor: "#eee",
+    backgroundColor: theme.palette.background.default,
   },
 
   settingsIcon: {
+    backgroundColor: theme.palette.background.paper,
     alignSelf: "center",
     marginLeft: "auto",
     padding: 8,
@@ -68,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
 
   serachInputWrapper: {
     flex: 1,
-    background: "#fff",
+    backgroundColor: theme.palette.background.default,
     display: "flex",
     borderRadius: 40,
     padding: 4,
@@ -76,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   searchIcon: {
-    color: "grey",
+    color: theme.palette.primary.main,
     marginLeft: 6,
     marginRight: 6,
     alignSelf: "center",
@@ -86,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     border: "none",
     borderRadius: 30,
+    outline: "none",
   },
 
   badge: {
