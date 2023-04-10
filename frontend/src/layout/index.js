@@ -254,7 +254,7 @@ const LoggedInLayout = ({ children }) => {
             edge="start"
             variant="contained"
             aria-label="open drawer"
-            color="secondary"
+            style={{ color: "white" }}
             onClick={() => setDrawerOpen(!drawerOpen)}
             className={clsx(
               classes.menuButton,
@@ -266,13 +266,13 @@ const LoggedInLayout = ({ children }) => {
           <Typography
             component="h1"
             variant="h6"
-            color="secondary"
+            style={{ color: "white" }}
             noWrap
             className={classes.title}
           >
             {greaterThenSm ? (
               <>
-                Olá <b>{user.name}</b>, Seja bem-vindo.
+                Olá <b>{user.name}</b>, Seja bem-vindo ao painel aTicket.
               </>
             ) : (
               user.name
@@ -291,7 +291,7 @@ const LoggedInLayout = ({ children }) => {
               aria-haspopup="true"
               onClick={handleMenu}
               variant="contained"
-              color="secondary"
+              style={{ color: "white" }}
 
             >
               <AccountCircle />
@@ -300,7 +300,7 @@ const LoggedInLayout = ({ children }) => {
               id="menu-appbar"
               anchorEl={anchorEl}
               getContentAnchorEl={null}
-              color="secondary"
+              style={{ color: "white" }}
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "right",
