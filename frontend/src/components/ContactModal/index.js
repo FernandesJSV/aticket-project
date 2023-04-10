@@ -221,7 +221,7 @@ const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
 															size="small"
 															onClick={() => remove(index)}
 														>
-															<DeleteOutlineIcon />
+															<DeleteOutlineIcon color="secondary" />
 														</IconButton>
 													</div>
 												))}
