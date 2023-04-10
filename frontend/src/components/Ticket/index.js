@@ -178,7 +178,9 @@ const Ticket = () => {
           <TicketActionButtons ticket={ticket} />
         </TicketHeader>
         
-
+        <Paper>
+          <TagsContainer ticket={ticket} />
+        </Paper>
 
         
         <ReplyMessageProvider>{renderMessagesList()}</ReplyMessageProvider>
