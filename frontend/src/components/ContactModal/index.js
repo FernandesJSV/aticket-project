@@ -242,7 +242,7 @@ const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
 							<DialogActions>
 								<Button
 									onClick={handleClose}
-									color="secondary"
+									color="primary"
 									disabled={isSubmitting}
 									variant="outlined"
 								>

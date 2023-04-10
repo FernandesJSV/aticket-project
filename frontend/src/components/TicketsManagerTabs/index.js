@@ -26,6 +26,11 @@ import { Button } from "@material-ui/core";
 import { TagsFilter } from "../TagsFilter";
 import { UsersFilter } from "../UsersFilter";
 
+import LibraryAddCheckIcon from '@material-ui/icons/LibraryAddCheck';
+import PageviewIcon from '@material-ui/icons/Pageview';
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
+import TextsmsIcon from '@material-ui/icons/Textsms';
+
 const useStyles = makeStyles((theme) => ({
   ticketsWrapper: {
     position: "relative",
@@ -197,19 +202,19 @@ const TicketsManagerTabs = () => {
         >
           <Tab
             value={"open"}
-            icon={<MoveToInboxIcon />}
+            icon={<TextsmsIcon />}
             label={i18n.t("tickets.tabs.open.title")}
             classes={{ root: classes.tab }}
           />
           <Tab
             value={"closed"}
-            icon={<CheckBoxIcon />}
+            icon={<LibraryAddCheckIcon />}
             label={i18n.t("tickets.tabs.closed.title")}
             classes={{ root: classes.tab }}
           />
           <Tab
             value={"search"}
-            icon={<SearchIcon />}
+            icon={<PageviewIcon />}
             label={i18n.t("tickets.tabs.search.title")}
             classes={{ root: classes.tab }}
           />
@@ -291,7 +296,7 @@ const TicketsManagerTabs = () => {
               <Badge
                 className={classes.badge}
                 badgeContent={pendingCount}
-                color="secondary"
+                color="primary"
               >
                 {i18n.t("ticketsList.pendingHeader")}
               </Badge>

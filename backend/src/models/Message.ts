@@ -38,6 +38,7 @@ class Message extends Model<Message> {
   @Column
   read: boolean;
 
+  @PrimaryKey
   @Default(false)
   @Column
   fromMe: boolean;

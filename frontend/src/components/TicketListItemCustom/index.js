@@ -5,7 +5,7 @@ import { parseISO, format, isSameDay } from "date-fns";
 import clsx from "clsx";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { green, grey, red, blue } from "@material-ui/core/colors";
+import { green, grey } from "@material-ui/core/colors";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -27,13 +27,10 @@ import { TicketsContext } from "../../context/Tickets/TicketsContext";
 import toastError from "../../errors/toastError";
 import { v4 as uuidv4 } from "uuid";
 
-import RoomIcon from '@material-ui/icons/Room';
 import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 import AndroidIcon from "@material-ui/icons/Android";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import TicketMessagesDialog from "../TicketMessagesDialog";
-import DoneIcon from '@material-ui/icons/Done';
-import ClearOutlinedIcon from '@material-ui/icons/ClearOutlined';
 
 const useStyles = makeStyles((theme) => ({
   ticket: {
@@ -75,8 +72,6 @@ const useStyles = makeStyles((theme) => ({
   lastMessageTime: {
     justifySelf: "flex-end",
     textAlign: "right",
-    position: "relative",
-    top: -13
   },
 
   closedBadge: {
@@ -87,14 +82,13 @@ const useStyles = makeStyles((theme) => ({
   },
 
   contactLastMessage: {
-    paddingRight: "50%",
+    paddingRight: 20,
   },
 
   newMessagesCount: {
     alignSelf: "center",
-    marginRight: 0,
+    marginRight: 8,
     marginLeft: "auto",
-    top: -13
   },
 
   badgeStyle: {
@@ -118,28 +112,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   ticketInfo: {
-    position: "relative",
-    top: -13
+    textAlign: "right",
   },
-
-  ticketInfo1: {
-    position: "relative",
-    top: 13,
-    right: 0
-  },
-  Radiusdot: {
-    "& .MuiBadge-badge": {
-      borderRadius: 2,
-      position: "inherit",
-      height: 16,
-      margin: 2,
-      padding: 3
-    },
-    "& .MuiBadge-anchorOriginTopRightRectangle": {
-      transform: "scale(1) translate(0%, -40%)",
-    },
-
-  }
 }));
 
 const TicketListItemCustom = ({ ticket }) => {
@@ -147,8 +121,6 @@ const TicketListItemCustom = ({ ticket }) => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [ticketUser, setTicketUser] = useState(null);
-  const [whatsAppName, setWhatsAppName] = useState(null);
-
   const [openTicketMessageDialog, setOpenTicketMessageDialog] = useState(false);
   const { ticketId } = useParams();
   const isMounted = useRef(true);
@@ -161,32 +133,11 @@ const TicketListItemCustom = ({ ticket }) => {
       setTicketUser(ticket.user.name);
     }
 
-    if (ticket.whatsappId && ticket.whatsapp) {
-      setWhatsAppName(ticket.whatsapp.name);
-    }
-
     return () => {
       isMounted.current = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleCloseTicket = async (id) => {
-    setLoading(true);
-    try {
-      await api.put(`/tickets/${id}`, {
-        status: "closed",
-        userId: user?.id,
-      });
-    } catch (err) {
-      setLoading(false);
-      toastError(err);
-    }
-    if (isMounted.current) {
-      setLoading(false);
-    }
-    history.push(`/tickets/`);
-  };
 
   const handleAcepptTicket = async (id) => {
     setLoading(true);
@@ -215,63 +166,13 @@ const TicketListItemCustom = ({ ticket }) => {
     if (ticketUser) {
       return (
         <>
-          <Badge
-            className={classes.Radiusdot}
-            badgeContent={`${ticketUser}`}
-            color="primary"
-          />
-          {ticket.whatsappId && (
-            <Badge
-              className={classes.Radiusdot}
-              badgeContent={`${whatsAppName}`}
-              style={{
-                backgroundColor: "#7d79f2",
-                height: 16,
-                padding: 4,
-                marginRight: 2,
-                position: "inherit",
-                borderRadius: 2,
-                color: "white",
-                top: -6
-              }}
-            />
-          )}
-          {ticket.queue?.name !== null && (
-            <Badge
-              className={classes.Radiusdot}
-              style={{
-                backgroundColor: ticket.queue?.color || "#7C7C7C",
-                height: 16,
-                padding: 4,
-                position: "inherit",
-                borderRadius: 2,
-                color: "white",
-                top: -6
-              }}
-              badgeContent={ticket.queue?.name || "Sem fila"}
-            //color="primary"
-            />
-          )}
-          {ticket.status === "open" && (
-            <Tooltip title="Fechar Conversa">
-              <ClearOutlinedIcon
-                onClick={() => handleCloseTicket(ticket.id)}
-                fontSize="small"
-                style={{
-                  color: red[700],
-                  cursor: "pointer",
-                  marginRight: 5,
-                }}
-              />
-            </Tooltip>
-          )}
           {profile === "admin" && (
             <Tooltip title="Espiar Conversa">
               <VisibilityIcon
                 onClick={() => setOpenTicketMessageDialog(true)}
                 fontSize="small"
                 style={{
-                  color: blue[700],
+                  color: grey[700],
                   cursor: "pointer",
                   marginRight: 5,
                 }}
@@ -286,60 +187,19 @@ const TicketListItemCustom = ({ ticket }) => {
               />
             </Tooltip>
           )}
+          <Tooltip title={`Atribuido à ${ticketUser}`}>
+            <WhatsAppIcon fontSize="small" style={{ color: grey[700] }} />
+          </Tooltip>
         </>
       );
     } else {
       return (
         <>
-
-          {ticket.queue?.name !== null && (
-            <Badge
-              className={classes.Radiusdot}
-              style={{
-                //backgroundColor: ticket.queue?.color,
-                backgroundColor: ticket.queue?.color || "#7C7C7C",
-                height: 16,
-                padding: 4,
-                position: "inherit",
-                borderRadius: 2,
-                color: "white",
-                top: -6
-              }}
-              badgeContent={ticket.queue?.name || "Sem fila"}
-            //color=
-            />
-          )}
-          {ticket.status === "pending" && (
-            <Tooltip title="Fechar Conversa">
-              <ClearOutlinedIcon
-                onClick={() => handleCloseTicket(ticket.id)}
-                fontSize="small"
-                style={{
-                  color: red[700],
-                  cursor: "pointer",
-                  marginRight: 5,
-                }}
-              />
-            </Tooltip>
-          )}
           {ticket.chatbot && (
             <Tooltip title="Chatbot">
               <AndroidIcon
                 fontSize="small"
                 style={{ color: grey[700], marginRight: 5 }}
-              />
-            </Tooltip>
-          )}
-          {ticket.status === "open" && (
-            <Tooltip title="Fechar Conversa">
-              <ClearOutlinedIcon
-                onClick={() => handleCloseTicket(ticket.id)}
-                fontSize="small"
-                style={{
-                  color: red[700],
-                  cursor: "pointer",
-                  marginRight: 5,
-                }}
               />
             </Tooltip>
           )}
@@ -349,20 +209,7 @@ const TicketListItemCustom = ({ ticket }) => {
                 onClick={() => setOpenTicketMessageDialog(true)}
                 fontSize="small"
                 style={{
-                  color: blue[700],
-                  cursor: "pointer",
-                  marginRight: 5,
-                }}
-              />
-            </Tooltip>
-          )}
-          {ticket.status === "pending" && (
-            <Tooltip title="Aceitar Conversa">
-              <DoneIcon
-                onClick={() => handleAcepptTicket(ticket.id)}
-                fontSize="small"
-                style={{
-                  color: green[700],
+                  color: grey[700],
                   cursor: "pointer",
                   marginRight: 5,
                 }}
@@ -418,9 +265,6 @@ const TicketListItemCustom = ({ ticket }) => {
               >
                 {ticket.contact.name}
               </Typography>
-              <ListItemSecondaryAction>
-                <Box className={classes.ticketInfo1}>{renderTicketInfo()}</Box>
-              </ListItemSecondaryAction>
             </span>
           }
           secondary={
@@ -431,40 +275,46 @@ const TicketListItemCustom = ({ ticket }) => {
                 component="span"
                 variant="body2"
                 color="textSecondary"
-              > {ticket.lastMessage.includes('data:image/png;base64') ? <MarkdownWrapper> Localização</MarkdownWrapper> : <MarkdownWrapper>{ticket.lastMessage}</MarkdownWrapper>}
-                {ticket.lastMessage === "" ? <br /> : <MarkdownWrapper>{ticket.lastMessage}</MarkdownWrapper>}
+              >
+                {ticket.lastMessage ? (
+                  <MarkdownWrapper>{ticket.lastMessage}</MarkdownWrapper>
+                ) : (
+                  <br />
+                )}
               </Typography>
-            </span>
 
-          }
-        />
-        <ListItemSecondaryAction>
-          {ticket.status === "closed" && (
-            <Badge
-              className={classes.Radiusdot}
-              badgeContent={"FECHADO"}
-              //color="primary"
-              style={{
-                marginRight: 5,
-                backgroundColor: ticket.queue?.color || "#ff0000",
-                height: 16,
-                padding: 4,
-                borderRadius: 2,
-                color: "white",
-                top: -13
-              }}
-            />
-          )}
-
-          {ticket.lastMessage && (
-            <>
               <Badge
                 className={classes.newMessagesCount}
-                badgeContent={ticket.unreadMessages ? ticket.unreadMessages : null}
+                badgeContent={ticket.unreadMessages}
                 classes={{
                   badge: classes.badgeStyle,
                 }}
               />
+            </span>
+          }
+        />
+        {ticket.status === "pending" && (
+          <ButtonWithSpinner
+            color="primary"
+            variant="contained"
+            className={classes.acceptButton}
+            size="small"
+            loading={loading}
+            onClick={(e) => handleAcepptTicket(ticket.id)}
+          >
+            {i18n.t("ticketsList.buttons.accept")}
+          </ButtonWithSpinner>
+        )}
+        <ListItemSecondaryAction>
+          {ticket.status === "closed" && (
+            <Badge
+              className={classes.closedBadge}
+              badgeContent={"closed"}
+              color="primary"
+            />
+          )}
+          {ticket.lastMessage && (
+            <>
               <Typography
                 className={classes.lastMessageTime}
                 component="span"
@@ -478,12 +328,10 @@ const TicketListItemCustom = ({ ticket }) => {
                 )}
               </Typography>
               <br />
-
+              <Box className={classes.ticketInfo}>{renderTicketInfo()}</Box>
             </>
           )}
-
         </ListItemSecondaryAction>
-
       </ListItem>
       <Divider variant="inset" component="li" />
     </React.Fragment>

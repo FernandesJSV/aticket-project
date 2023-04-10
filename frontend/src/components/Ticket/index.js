@@ -176,9 +176,10 @@ const Ticket = () => {
           {renderTicketInfo()}
           <TicketActionButtons ticket={ticket} />
         </TicketHeader>
-        <Paper>
-          <TagsContainer ticket={ticket} />
-        </Paper>
+        
+
+
+        
         <ReplyMessageProvider>{renderMessagesList()}</ReplyMessageProvider>
       </Paper>
       <ContactDrawer
@@ -192,4 +193,14 @@ const Ticket = () => {
   );
 };
 
+
+/* 
+
+
+<Paper>
+          <TagsContainer ticket={ticket} />
+        </Paper>
+
+
+      */
 export default Ticket;

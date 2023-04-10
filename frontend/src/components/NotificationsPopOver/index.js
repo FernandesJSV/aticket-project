@@ -126,11 +126,11 @@ const NotificationsPopOver = () => {
 					return [data.ticket, ...prevState];
 				});
 
-				const shouldNotNotificate =
-					(data.message.ticketId === ticketIdRef.current &&
-						document.visibilityState === "visible") ||
-					(data.ticket.userId && data.ticket.userId !== user?.id) ||
-					data.ticket.isGroup;
+        const shouldNotNotificate =
+            (data.message.ticketId === ticketIdRef.current &&
+            document.visibilityState === "visible") ||
+            (data.ticket.userId && data.ticket.userId !== user?.id) ||
+            data.ticket.isGroup || user.queues.map(q => q.id).indexOf(data.ticket.queueId) === -1;
 
 				if (shouldNotNotificate) return;
 
@@ -193,6 +193,7 @@ const NotificationsPopOver = () => {
   return (
     <>
       <IconButton
+        color="secondary"
         onClick={handleClick}
         ref={anchorEl}
         aria-label="Mostrar Notificações"
@@ -200,8 +201,8 @@ const NotificationsPopOver = () => {
 
       >
           <ChatIcon />
-        {/* <Badge badgeContent={notifications.length} color="secondary">
-        </Badge> */}
+        {<Badge badgeContent={notifications.length} color="error">
+        </Badge>}
       </IconButton>
       <Popover
         disableScrollLock

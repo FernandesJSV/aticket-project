@@ -31,6 +31,7 @@ import CampaignReport from "../pages/CampaignReport";
 import Annoucements from "../pages/Annoucements";
 import Chat from "../pages/Chat";
 import Subscription from "../pages/Subscription/";
+import ToDoList from "../pages/ToDoList/";
 
 
 const Routes = () => {
@@ -76,6 +77,12 @@ const Routes = () => {
                   exact
                   path="/schedules"
                   component={Schedules}
+                  isPrivate
+                />
+                <Route
+                  exact
+                  path="/todolist"
+                  component={ToDoList}
                   isPrivate
                 />
                 <Route exact path="/tags" component={Tags} isPrivate />

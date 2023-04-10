@@ -2,7 +2,9 @@ import React, { useEffect, useReducer, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import toastError from "../../errors/toastError";
 import Popover from "@material-ui/core/Popover";
-import AnnouncementIcon from "@material-ui/icons/Announcement";
+//import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
+//import AnnouncementIcon from "@material-ui/icons/Announcement";
+import NotificationImportantOutlinedIcon from '@material-ui/icons/NotificationImportantOutlined';
 import {
   Avatar,
   Badge,
@@ -237,16 +239,17 @@ export default function AnnouncementsPopover() {
         handleClose={() => setShowAnnouncementDialog(false)}
       />
       <IconButton
+        color="secondary"
         variant="contained"
         aria-describedby={id}
         onClick={handleClick}
       >
         <Badge
-          color="secondary"
+          color="error"
           variant="dot"
           invisible={invisible || announcements.length < 1}
         >
-          <AnnouncementIcon />
+          <NotificationImportantOutlinedIcon />
         </Badge>
       </IconButton>
       <Popover
@@ -310,7 +313,7 @@ export default function AnnouncementsPopover() {
                 </ListItem>
               ))}
             {isArray(announcements) && announcements.length === 0 && (
-              <ListItemText primary="Nenhum registro" />
+              <ListItemText primary=" Nenhum registro" />
             )}
           </List>
         </Paper>

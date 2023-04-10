@@ -63,7 +63,7 @@ const UpdateTicketService = async ({
       companyId,
       whatsappId: ticket.whatsappId
     });
-
+    if (!queueId)
     await SetTicketMessagesAsRead(ticket);
 
     const oldStatus = ticket.status;

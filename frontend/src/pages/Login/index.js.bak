@@ -1,10 +1,11 @@
-import React, { useState, useContext } from "react";//import { Link as RouterLink } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link as RouterLink } from "react-router-dom";
 
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid"; 
+import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -13,14 +14,14 @@ import Container from "@material-ui/core/Container";
 import { i18n } from "../../translate/i18n";
 
 import { AuthContext } from "../../context/Auth/AuthContext";
-import logo from "../../assets/logo.png";
+import logo2 from "../../assets/logo2.png";
 
 
 const Copyright = () => {
 	return (
-		<Typography variant="body2" color="secondary" align="center">
+		<Typography variant="body2" color="textSecondary" align="center">
 			{"Copyright "}
- 			<Link color="secondary" href="https://aticket.com.br">
+ 			<Link color="inherit" href="https://aticket.com.br">
  				aTicket.com.br
  			</Link>{" "}
  			{new Date().getFullYear()}
@@ -30,30 +31,14 @@ const Copyright = () => {
  };
 
 const useStyles = makeStyles(theme => ({
-	root: {
-		width: "100vw",
-		height: "100vh",
-		background: "linear-gradient(to right, #4572ff , #5e85ff , #C5AEF2)",
-		// backgroundImage: "url(https://th.bing.com/th/id/OIP.YRbnvsV4zu-8RejDYPrlKwHaDt?pid=ImgDet&rs=1)",
-		// backgroundRepeat: "no-repeat",
-		// backgroundSize: "100% 100%",
-		// backgroundPosition: "center",
-		display: "flex",
-		flexDirection: "column",
-		alignItems: "center",
-		justifyContent: "center",
-		textAlign: "center",
-	},
 	paper: {
-		backgroundColor: "white",
+		marginTop: theme.spacing(8),
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
-		padding: "55px 30px",
-		borderRadius: "12.5px",
 	},
 	avatar: {
-		margin: theme.spacing(1),  
+		margin: theme.spacing(1),
 		backgroundColor: theme.palette.secondary.main,
 	},
 	form: {
@@ -63,9 +48,6 @@ const useStyles = makeStyles(theme => ({
 	submit: {
 		margin: theme.spacing(3, 0, 2),
 	},
-	powered: {
-		color: "white"
-	}
 }));
 
 const Login = () => {
@@ -85,19 +67,15 @@ const Login = () => {
 	};
 
 	return (
-		<div className={classes.root}>
 		<Container component="main" maxWidth="xs">
-			<CssBaseline/>
+			<CssBaseline />
 			<div className={classes.paper}>
 				<div>
-					<img style={{ margin: "0 auto", width: "80%" }} src={logo} alt="Whats" />
+					<center><img src={logo2} style={{ margin: "0 auto" , width: "70%"}} alt="logo2" /></center>
 				</div>
-				{/*<Typography component="h1" variant="h5">
-					{i18n.t("login.title")}
-				</Typography>*/}
 				<form className={classes.form} noValidate onSubmit={handlSubmit}>
 					<TextField
-						variant="standard"
+						variant="outlined"
 						margin="normal"
 						required
 						fullWidth
@@ -110,7 +88,7 @@ const Login = () => {
 						autoFocus
 					/>
 					<TextField
-						variant="standard"
+						variant="outlined"
 						margin="normal"
 						required
 						fullWidth
@@ -131,7 +109,7 @@ const Login = () => {
 					>
 						{i18n.t("login.buttons.submit")}
 					</Button>
-					{/* <Grid container>
+					{<Grid container>
 						<Grid item>
 							<Link
 								href="#"
@@ -142,15 +120,11 @@ const Login = () => {
 								{i18n.t("login.buttons.register")}
 							</Link>
 						</Grid>
-					</Grid> */}
+					</Grid>}
 				</form>
-			
 			</div>
-			
-			
 			<Box mt={8}>{ <Copyright /> }</Box>
 		</Container>
-		</div>
 	);
 };
 

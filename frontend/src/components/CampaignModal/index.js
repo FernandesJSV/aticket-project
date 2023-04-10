@@ -603,7 +603,7 @@ const CampaignModal = ({
                       {campaignEditable && (
                         <IconButton
                           onClick={() => setConfirmationOpen(true)}
-                          color="secondary"
+                          color="primary"
                         >
                           <DeleteOutlineIcon />
                         </IconButton>
@@ -643,7 +643,7 @@ const CampaignModal = ({
                 )}
                 <Button
                   onClick={handleClose}
-                  color="secondary"
+                  color="primary"
                   disabled={isSubmitting}
                   variant="outlined"
                 >

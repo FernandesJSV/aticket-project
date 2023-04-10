@@ -29,7 +29,7 @@ import { i18n } from "../translate/i18n";
 import toastError from "../errors/toastError";
 import AnnouncementsPopover from "../components/AnnouncementsPopover";
 
-import logo1 from "../assets/logo1.png";
+import logo from "../assets/logo.png";
 import { socketConnection } from "../services/socket";
 import ChatPopover from "../pages/Chat/ChatPopover";
 
@@ -46,13 +46,16 @@ const useStyles = makeStyles((theme) => ({
 
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
+    background: "linear-gradient(to right, #4572ff , #5e85ff , #C5AEF2)",
+    
   },
   toolbarIcon: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     padding: "0 8px",
     minHeight: "48px",
+    //background: "linear-gradient(to right, #3c6afb , #3c6afb , #C5AEF2)",
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -119,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
   },
   containerWithScroll: {
     flex: 1,
-    padding: theme.spacing(1),
+    padding: theme.spacing(0),
     overflowY: "scroll",
     ...theme.scrollbarStyles,
   },
@@ -224,13 +227,14 @@ const LoggedInLayout = ({ children }) => {
         open={drawerOpen}
       >
         <div className={classes.toolbarIcon}>
-          <img src={logo1} style={{ margin: "0 auto" , width: "70%"}} alt="logo1" />
-          <IconButton onClick={() => setDrawerOpen(!drawerOpen)}>
+          <img src={logo} style={{ margin: "0 auto" , width: "50%"}} alt="logo" />
+          <IconButton color="primary" onClick={() => setDrawerOpen(!drawerOpen)}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
-        <List className={classes.containerWithScroll}>
+        { /* <List className={classes.containerWithScroll}> */}
+        <List>
           <MainListItems drawerClose={drawerClose} />
         </List>
         <Divider />
@@ -250,6 +254,7 @@ const LoggedInLayout = ({ children }) => {
             edge="start"
             variant="contained"
             aria-label="open drawer"
+            color="secondary"
             onClick={() => setDrawerOpen(!drawerOpen)}
             className={clsx(
               classes.menuButton,
@@ -261,7 +266,7 @@ const LoggedInLayout = ({ children }) => {
           <Typography
             component="h1"
             variant="h6"
-            color="#FFFFFF"
+            color="secondary"
             noWrap
             className={classes.title}
           >
@@ -286,6 +291,7 @@ const LoggedInLayout = ({ children }) => {
               aria-haspopup="true"
               onClick={handleMenu}
               variant="contained"
+              color="secondary"
 
             >
               <AccountCircle />
@@ -294,6 +300,7 @@ const LoggedInLayout = ({ children }) => {
               id="menu-appbar"
               anchorEl={anchorEl}
               getContentAnchorEl={null}
+              color="secondary"
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "right",
