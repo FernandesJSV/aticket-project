@@ -203,7 +203,7 @@ export function PlansManagerGrid(props) {
                         <TableRow key={row.id}>
                             <TableCell align="center" style={{ width: '1%' }}>
                                 <IconButton onClick={() => onSelect(row)} aria-label="delete">
-                                    <EditIcon />
+                                    <EditIcon color="secondary" />
                                 </IconButton>
                             </TableCell>
                             <TableCell align="left">{row.name || '-'}</TableCell>
