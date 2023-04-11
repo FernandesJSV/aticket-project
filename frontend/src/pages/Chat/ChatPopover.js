@@ -222,7 +222,8 @@ export default function ChatPopover() {
         //color="secondary"
         aria-describedby={id}
         variant="contained"
-        color={invisible ? "secondary" : "secondary"}
+        style={{ color: "white" }}
+        //color={invisible ? "secondary" : "secondary"}
         onClick={handleClick}
       >
         <Badge color="error" variant="dot" invisible={invisible}>
