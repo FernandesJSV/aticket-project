@@ -78,6 +78,7 @@ const TicketActionButtonsCustom = ({ ticket }) => {
 		<div className={classes.actionButtons}>
 			{ticket.status === "closed" && (
 				<ButtonWithSpinner
+					color="primary"
 					loading={loading}
 					startIcon={<Replay />}
 					size="small"

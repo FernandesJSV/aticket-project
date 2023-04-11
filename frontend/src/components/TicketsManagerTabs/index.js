@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   settingsIcon: {
-    backgroundColor: theme.palette.background.paper,
     alignSelf: "center",
     marginLeft: "auto",
     padding: 8,
@@ -63,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    background: "#fafafa",
+    backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(1),
   },
 
@@ -86,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
   searchInput: {
     flex: 1,
     border: "none",
-    borderRadius: 30,
+    borderRadius: 25,
     outline: "none",
   },
 

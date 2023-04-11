@@ -112,7 +112,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   ticketInfo: {
-    backgroundColor: theme.palette.background.default,
     textAlign: "right",
   },
 }));
