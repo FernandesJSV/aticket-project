@@ -151,7 +151,7 @@ export function QueueOptionStepper({ queueId, options, updateOptions }) {
                 className={classes.button}
                 onClick={() => handleDeleteOption(index)}
               >
-                <DeleteOutlineIcon />
+                <DeleteOutlineIcon color="secondary" />
               </IconButton>
             </>
           )}
@@ -168,7 +168,7 @@ export function QueueOptionStepper({ queueId, options, updateOptions }) {
             className={classes.button}
             onClick={() => handleEdition(index)}
           >
-            <EditIcon />
+            <EditIcon color="secondary" />
           </IconButton>
         </Typography>
       </>

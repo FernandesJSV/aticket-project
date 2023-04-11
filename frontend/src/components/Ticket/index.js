@@ -23,6 +23,7 @@ const drawerWidth = 320;
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    backgroundColor: theme.palette.background.default,
     display: "flex",
     height: "100%",
     position: "relative",
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 0,
   },
 }));
+
 
 const Ticket = () => {
   const { ticketId } = useParams();
@@ -177,7 +179,9 @@ const Ticket = () => {
           <TicketActionButtons ticket={ticket} />
         </TicketHeader>
         
-
+        <Paper>
+          <TagsContainer ticket={ticket} />
+        </Paper>
 
         
         <ReplyMessageProvider>{renderMessagesList()}</ReplyMessageProvider>

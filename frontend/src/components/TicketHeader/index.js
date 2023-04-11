@@ -7,7 +7,7 @@ import TicketHeaderSkeleton from "../TicketHeaderSkeleton";
 const useStyles = makeStyles(theme => ({
 	ticketHeader: {
 		display: "flex",
-		backgroundColor: "#eee",
+		backgroundColor: theme.palette.background.default,
 		flex: "none",
 		borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
 	},

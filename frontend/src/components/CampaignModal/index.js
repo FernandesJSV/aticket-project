@@ -605,7 +605,7 @@ const CampaignModal = ({
                           onClick={() => setConfirmationOpen(true)}
                           color="primary"
                         >
-                          <DeleteOutlineIcon />
+                          <DeleteOutlineIcon color="secondary" />
                         </IconButton>
                       )}
                     </Grid>

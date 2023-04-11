@@ -78,7 +78,7 @@ export function TagsContainer ({ ticket }) {
     }
 
     return (
-        <Paper style={{padding: 12}}>
+        <Paper style={{padding: 7, borderRadius: '0px'}}>
             <Autocomplete
                 multiple
                 size="small"
@@ -99,7 +99,7 @@ export function TagsContainer ({ ticket }) {
                     ))
                 }
                 renderInput={(params) => (
-                    <TextField {...params} variant="outlined" placeholder="Tags" />
+                    <TextField {...params} variant="standard" placeholder="Tags" />
                 )}
                 PaperComponent={({ children }) => (
                     <Paper style={{width: 400, marginLeft: 12}}>

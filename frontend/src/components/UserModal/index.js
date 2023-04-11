@@ -28,6 +28,7 @@ import { Can } from "../Can";
 
 const useStyles = makeStyles(theme => ({
 	root: {
+		backgroundColor: theme.palette.background.paper,
 		display: "flex",
 		flexWrap: "wrap",
 	},

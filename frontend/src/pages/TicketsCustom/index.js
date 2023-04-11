@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
 	chatContainer: {
 		flex: 1,
 		// backgroundColor: "#3c6afb",
-		// padding: theme.spacing(2),
+		padding: theme.spacing(2),
 		height: `calc(100% - 48px)`,
 		overflowY: "hidden",
 	},
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 		flexDirection: "column",
 	},
 	welcomeMsg: {
-		backgroundColor: "#eee",
+		backgroundColor: theme.palette.background.paper,
 		display: "flex",
 		justifyContent: "space-evenly",
 		alignItems: "center",
