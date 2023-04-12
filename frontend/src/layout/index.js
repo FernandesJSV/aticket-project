@@ -14,7 +14,13 @@ import {
   Menu,
   useTheme,
   useMediaQuery,
+  Switch,
+  FormGroup,
+  FormControlLabel,
 } from "@material-ui/core";
+
+import Brightness4Icon from '@material-ui/icons/Brightness4';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
 
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -32,6 +38,8 @@ import AnnouncementsPopover from "../components/AnnouncementsPopover";
 import logo from "../assets/logo.png";
 import { socketConnection } from "../services/socket";
 import ChatPopover from "../pages/Chat/ChatPopover";
+
+import { mainEvents } from "../App";
 
 const drawerWidth = 300;
 
@@ -126,6 +134,9 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "scroll",
     ...theme.scrollbarStyles,
   },
+  visible: {
+    display: "none",
+  },
 }));
 
 const LoggedInLayout = ({ children }) => {
@@ -183,6 +194,13 @@ const LoggedInLayout = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const [checked, setChecked] = useState(false);
+
+
+  useEffect(() => {
+    setChecked(localStorage.getItem("layout-theme") === "dark");
+  });
+
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
     setMenuOpen(true);
@@ -212,7 +230,6 @@ const LoggedInLayout = ({ children }) => {
   if (loading) {
     return <BackdropLoading />;
   }
-
   return (
     <div className={classes.root}>
       <Drawer
@@ -250,6 +267,7 @@ const LoggedInLayout = ({ children }) => {
         color="primary"
       >
         <Toolbar variant="dense" className={classes.toolbar}>
+
           <IconButton
             edge="start"
             variant="contained"
@@ -272,17 +290,35 @@ const LoggedInLayout = ({ children }) => {
           >
             {greaterThenSm ? (
               <>
-                Olá <b>{user.name}</b>, Seja bem-vindo ao painel aTicket.
+                Olá <b>{user.name}</b>, Seja bem-vindo.
               </>
             ) : (
               user.name
             )}
           </Typography>
+
+          
+          
+        <FormControlLabel control={
+          <Switch
+            checked={checked}
+            onChange={() => {
+              mainEvents.emit("toggle-theme")
+              setChecked(!checked);
+            }}
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
+        }label="DarkMode" />
+      
+          
+
           {user.id && <NotificationsPopOver />}
 
           <AnnouncementsPopover />
 
           <ChatPopover />
+
+          
 
           <div>
             <IconButton
@@ -320,6 +356,7 @@ const LoggedInLayout = ({ children }) => {
               </MenuItem>
             </Menu>
           </div>
+          
         </Toolbar>
       </AppBar>
       <main className={classes.content}>
