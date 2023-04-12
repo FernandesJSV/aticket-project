@@ -130,7 +130,7 @@ const NotificationsPopOver = () => {
 					(data.message.ticketId === ticketIdRef.current &&
 						document.visibilityState === "visible") ||
 					(data.ticket.userId && data.ticket.userId !== user?.id) ||
-					data.ticket.isGroup;
+					data.ticket.isGroup || user.queues.map(q => q.id).indexOf(data.ticket.queueId) === -1;
 
 				if (shouldNotNotificate) return;
 
@@ -197,11 +197,12 @@ const NotificationsPopOver = () => {
         ref={anchorEl}
         aria-label="Mostrar Notificações"
         variant="contained"
+		style={{ color: "white" }}
 
       >
           <ChatIcon />
-        {/* <Badge badgeContent={notifications.length} color="secondary">
-        </Badge> */}
+        {<Badge badgeContent={notifications.length} color="error">
+        </Badge>}
       </IconButton>
       <Popover
         disableScrollLock

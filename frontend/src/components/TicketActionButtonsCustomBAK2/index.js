@@ -14,14 +14,12 @@ import { AuthContext } from "../../context/Auth/AuthContext";
 import { TicketsContext } from "../../context/Tickets/TicketsContext";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import UndoRoundedIcon from '@material-ui/icons/UndoRounded';
-import RestoreOutlinedIcon from '@material-ui/icons/RestoreOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import { green } from '@material-ui/core/colors';
 
 
 const useStyles = makeStyles(theme => ({
 	actionButtons: {
-		color: "primary",
 		marginRight: 6,
 		flex: "none",
 		alignSelf: "center",
@@ -80,6 +78,7 @@ const TicketActionButtonsCustom = ({ ticket }) => {
 		<div className={classes.actionButtons}>
 			{ticket.status === "closed" && (
 				<ButtonWithSpinner
+					color="primary"
 					loading={loading}
 					startIcon={<Replay />}
 					size="small"
@@ -92,13 +91,13 @@ const TicketActionButtonsCustom = ({ ticket }) => {
 				<>
 					<Tooltip title={i18n.t("messagesList.header.buttons.return")}>
 						<IconButton onClick={e => handleUpdateTicketStatus(e, "pending", null)}>
-							<RestoreOutlinedIcon color="primary" />
+							<UndoRoundedIcon />
 						</IconButton>
 					</Tooltip>
 					<ThemeProvider theme={customTheme}>
 						<Tooltip title={i18n.t("messagesList.header.buttons.resolve")}>
 							<IconButton onClick={e => handleUpdateTicketStatus(e, "closed", user?.id)} color="primary">
-								<CheckCircleIcon color="primary"/>
+								<CheckCircleIcon />
 							</IconButton>
 						</Tooltip>
 					</ThemeProvider>
@@ -120,7 +119,7 @@ const TicketActionButtonsCustom = ({ ticket }) => {
 						{i18n.t("messagesList.header.buttons.resolve")}
 					</ButtonWithSpinner> */}
 					<IconButton onClick={handleOpenTicketOptionsMenu}>
-						<MoreVert color="primary"/>
+						<MoreVert />
 					</IconButton>
 					<TicketOptionsMenu
 						ticket={ticket}
