@@ -1,22 +1,36 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 
 import * as Yup from "yup";
-import { Formik, Form, Field } from "formik";
+import {
+	Formik,
+	Form,
+	Field
+} from "formik";
 import { toast } from "react-toastify";
 
-import { makeStyles } from "@material-ui/core/styles";
+import {
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	CircularProgress,
+	Select,
+	InputLabel,
+	makeStyles,
+	MenuItem,
+	FormControl,
+	TextField,
+	InputAdornment,
+	IconButton
+} from '@material-ui/core';
+
+import { 
+	Visibility, 
+	VisibilityOff 
+} from '@material-ui/icons';
+
 import { green } from "@material-ui/core/colors";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
 
 import { i18n } from "../../translate/i18n";
 
@@ -25,6 +39,7 @@ import toastError from "../../errors/toastError";
 import QueueSelect from "../QueueSelect";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { Can } from "../Can";
+import useWhatsApps from "../../hooks/useWhatsApps";
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -38,11 +53,9 @@ const useStyles = makeStyles(theme => ({
 			marginRight: theme.spacing(1),
 		},
 	},
-
 	btnWrapper: {
 		position: "relative",
 	},
-
 	buttonProgress: {
 		color: green[500],
 		position: "absolute",
@@ -54,6 +67,14 @@ const useStyles = makeStyles(theme => ({
 	formControl: {
 		margin: theme.spacing(1),
 		minWidth: 120,
+	},
+	textField: {
+		marginRight: theme.spacing(1),
+		flex: 1,
+	},
+	container: {
+		display: 'flex',
+		flexWrap: 'wrap',
 	},
 }));
 
@@ -74,12 +95,19 @@ const UserModal = ({ open, onClose, userId }) => {
 		email: "",
 		password: "",
 		profile: "user",
+		startWork: "",
+		endWork: "",
 	};
 
 	const { user: loggedInUser } = useContext(AuthContext);
 
 	const [user, setUser] = useState(initialState);
 	const [selectedQueueIds, setSelectedQueueIds] = useState([]);
+	const [showPassword, setShowPassword] = useState(false);
+	const [whatsappId, setWhatsappId] = useState(false);
+	const { loading, whatsApps } = useWhatsApps();
+	const startWorkRef = useRef();
+	const endWorkRef = useRef();
 
 	useEffect(() => {
 		const fetchUser = async () => {
@@ -91,6 +119,7 @@ const UserModal = ({ open, onClose, userId }) => {
 				});
 				const userQueueIds = data.queues?.map(queue => queue.id);
 				setSelectedQueueIds(userQueueIds);
+				setWhatsappId(data.whatsappId ? data.whatsappId : '');
 			} catch (err) {
 				toastError(err);
 			}
@@ -105,7 +134,7 @@ const UserModal = ({ open, onClose, userId }) => {
 	};
 
 	const handleSaveUser = async values => {
-		const userData = { ...values, queueIds: selectedQueueIds };
+		const userData = { ...values, whatsappId, queueIds: selectedQueueIds };
 		try {
 			if (userId) {
 				await api.put(`/users/${userId}`, userData);
@@ -161,13 +190,25 @@ const UserModal = ({ open, onClose, userId }) => {
 									/>
 									<Field
 										as={TextField}
-										label={i18n.t("userModal.form.password")}
-										type="password"
 										name="password"
-										error={touched.password && Boolean(errors.password)}
-										helperText={touched.password && errors.password}
 										variant="outlined"
 										margin="dense"
+										label={i18n.t("userModal.form.password")}
+										error={touched.password && Boolean(errors.password)}
+										helperText={touched.password && errors.password}
+										type={showPassword ? 'text' : 'password'}
+										InputProps={{
+											endAdornment: (
+												<InputAdornment position="end">
+													<IconButton
+														aria-label="toggle password visibility"
+														onClick={() => setShowPassword((e) => !e)}
+													>
+														{showPassword ? <VisibilityOff color="secondary" /> : <Visibility color="secondary" />}
+													</IconButton>
+												</InputAdornment>
+											)
+										}}
 										fullWidth
 									/>
 								</div>
@@ -204,8 +245,8 @@ const UserModal = ({ open, onClose, userId }) => {
 														id="profile-selection"
 														required
 													>
-														<MenuItem value="admin">Admin</MenuItem>
-														<MenuItem value="user">User</MenuItem>
+														<MenuItem value="admin">{i18n.t("userModal.form.admin")}</MenuItem>
+														<MenuItem value="user">{i18n.t("userModal.form.user")}</MenuItem>
 													</Field>
 												</>
 											)}
@@ -222,11 +263,89 @@ const UserModal = ({ open, onClose, userId }) => {
 										/>
 									)}
 								/>
+								<Can
+									role={loggedInUser.profile}
+									perform="user-modal:editQueues"
+									yes={() => (!loading &&
+										<FormControl variant="outlined" margin="dense" className={classes.maxWidth} fullWidth>
+											<InputLabel>{i18n.t("userModal.form.whatsapp")}</InputLabel>
+											<Field
+												as={Select}
+												value={whatsappId}
+												onChange={(e) => setWhatsappId(e.target.value)}
+												label={i18n.t("userModal.form.whatsapp")}
+											>
+												<MenuItem value={''}>&nbsp;</MenuItem>
+												{whatsApps.map((whatsapp) => (
+													<MenuItem key={whatsapp.id} value={whatsapp.id}>{whatsapp.name}</MenuItem>
+												))}
+											</Field>
+										</FormControl>
+									)}
+								/>
+								<Can
+									role={loggedInUser.profile}
+									perform="user-modal:editProfile"
+									yes={() => (!loading &&
+										<form className={classes.container} noValidate>
+											<Field
+												as={TextField}
+												label={i18n.t("userModal.form.startWork")}
+												type="time"
+												ampm={false}
+												defaultValue="00:00"
+												inputRef={startWorkRef}
+												InputLabelProps={{
+													shrink: true,
+												}}
+												inputProps={{
+													step: 600, // 5 min
+												}}
+												fullWidth
+												name="startWork"
+												error={
+													touched.startWork && Boolean(errors.startWork)
+												}
+												helperText={
+													touched.startWork && errors.startWork
+												}
+												variant="outlined"
+												margin="dense"
+												className={classes.textField}
+											/>
+											<Field
+												as={TextField}
+												label={i18n.t("userModal.form.endWork")}
+												type="time"
+												ampm={false}
+												defaultValue="23:59"
+												inputRef={endWorkRef}
+												InputLabelProps={{
+													shrink: true,
+												}}
+												inputProps={{
+													step: 600, // 5 min
+												}}
+												fullWidth
+												name="endWork"
+												error={
+													touched.endWork && Boolean(errors.endWork)
+												}
+												helperText={
+													touched.endWork && errors.endWork
+												}
+												variant="outlined"
+												margin="dense"
+												className={classes.textField}
+											/>
+										</form>
+									)}
+								/>
 							</DialogContent>
 							<DialogActions>
 								<Button
 									onClick={handleClose}
-									color="primary"
+									color="secondary"
 									disabled={isSubmitting}
 									variant="outlined"
 								>
