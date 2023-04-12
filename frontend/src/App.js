@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import { ptBR } from "@material-ui/core/locale";
+import EventEmitter from "eventemitter3";
 
 import {
   CssBaseline,
@@ -12,8 +13,6 @@ import {
   FormControlLabel,
   makeStyles
 } from "@material-ui/core";
-import Brightness4Icon from '@material-ui/icons/Brightness4';
-import Brightness7Icon from '@material-ui/icons/Brightness7';
 import lightBackground from "../src/assets/wa-background-light.png";
 import darkBackground from "../src/assets/wa-background-dark.jpg";
 
@@ -27,6 +26,8 @@ const useStyles = makeStyles(() => ({
     display: "none",
   },
 }));
+
+export const mainEvents = new EventEmitter();
 
 const App = () => {
   const [locale, setLocale] = useState();
@@ -56,7 +57,6 @@ const App = () => {
           }
         }
       },
-      
       palette: {
         primary: { main: "#7d9bfa" },
         divider: "#464a5c",
@@ -76,20 +76,21 @@ const App = () => {
     locale
   );
 
-  const [theme, setTheme] = useState("light");
+  const cacheTheme = localStorage.getItem("layout-theme") || "light";
+
+  const [theme, setTheme] = useState(cacheTheme);
 
   const themeToggle = () => {
-    theme === "light" ? setTheme("dark") : setTheme("light");
+    const updatedTheme = theme === "light" ? "dark" : "light";
+    setTheme(updatedTheme);
+    localStorage.setItem("layout-theme", updatedTheme);
   };
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-    if (checked === false) {
-      themeToggle();
-    } else if (checked === true) {
-      themeToggle();
-    }
+  const handleChange = () => {
+    themeToggle();
   };
+
+  mainEvents.on("toggle-theme", handleChange);
 
   useEffect(() => {
     const i18nlocale = localStorage.getItem("i18nextLng");
@@ -104,15 +105,6 @@ const App = () => {
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <Routes />
       <CssBaseline />
-      {/* desativado aqui */}
-      <FormGroup row className={classes.switch}>
-        <FormControlLabel control={
-	<Switch
-	checked={checked}
-	onChange={handleChange}
-	inputProps={{ 'aria-label': 'controlled'}} 
-	/>}label="Dark Mode" />
-</FormGroup>
     </ThemeProvider>
   );
 };
