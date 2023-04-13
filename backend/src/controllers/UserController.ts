@@ -91,13 +91,17 @@ export const update = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  if (req.user.profile !== "admin") {
-    throw new AppError("ERR_NO_PERMISSION", 403);
-  }
-
+  
   const { id: requestUserId, companyId } = req.user;
   const { userId } = req.params;
   const userData = req.body;
+
+  console.log(req.user);
+  console.log(userId);
+
+  if (req.user.profile !== "admin" && req.user.id != userId) {
+    throw new AppError("ERR_NO_PERMISSION", 403);
+  }
 
   const user = await UpdateUserService({
     userData,
