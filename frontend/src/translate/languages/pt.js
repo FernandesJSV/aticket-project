@@ -195,6 +195,7 @@ const messages = {
           email: "Email",
           password: "Senha",
           profile: "Perfil",
+          whatsapp: "Conexão Padrão",
         },
         buttons: {
           okAdd: "Adicionar",
@@ -555,6 +556,7 @@ const messages = {
           name: "Nome",
           email: "Email",
           profile: "Perfil",
+          whatsapp: "Conexão Padrão",
           actions: "Ações",
         },
         buttons: {
