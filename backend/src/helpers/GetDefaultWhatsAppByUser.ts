@@ -6,7 +6,7 @@ const GetDefaultWhatsAppByUser = async (
   userId: number
 ): Promise<Whatsapp | null> => {
   const user = await User.findByPk(userId, {include: ["whatsapp"]});
-  if( user === null ) {
+  if( user === null || !user.whatsapp) {
     return null;
   }
 
