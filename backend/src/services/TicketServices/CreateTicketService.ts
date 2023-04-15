@@ -4,6 +4,7 @@ import GetDefaultWhatsApp from "../../helpers/GetDefaultWhatsApp";
 import Ticket from "../../models/Ticket";
 import ShowContactService from "../ContactServices/ShowContactService";
 import { getIO } from "../../libs/socket";
+import GetDefaultWhatsAppByUser from "../../helpers/GetDefaultWhatsAppByUser";
 
 interface Request {
   contactId: number;
@@ -20,7 +21,10 @@ const CreateTicketService = async ({
   queueId,
   companyId
 }: Request): Promise<Ticket> => {
-  const defaultWhatsapp = await GetDefaultWhatsApp(companyId);
+  let defaultWhatsapp = await GetDefaultWhatsAppByUser(userId);
+
+  if (!defaultWhatsapp)
+    defaultWhatsapp = await GetDefaultWhatsApp(companyId);
 
   await CheckContactOpenTickets(contactId, defaultWhatsapp.id);
   
@@ -29,7 +33,8 @@ const CreateTicketService = async ({
   const [{ id }] = await Ticket.findOrCreate({
     where: {
       contactId,
-      companyId
+      companyId,
+      whatsappId: defaultWhatsapp.id
     },
     defaults: {
       contactId,
